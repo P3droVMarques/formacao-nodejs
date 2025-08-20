@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run:index": "node D:/Pedro/Desktop/formacao-nodejs/06-shopee-cart/src/index.js"
   },
   "keywords": [],
   "author": "",

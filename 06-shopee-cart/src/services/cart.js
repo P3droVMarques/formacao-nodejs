@@ -7,11 +7,23 @@ async function addItem(userCart, item) {
 }
 
 // ✅ -> calcular o total do carrinho
-async function calculateTotal(userCart) {
+async function calculateTotal(userCart, couponCode = null) {
   console.log("\nShopee Cart TOTAL IS:");
-
   const result = userCart.reduce((total, item) => total + item.subtotal(), 0);
-  console.log(`🎁Total: ${result}`);
+
+  // Aplicando cupom de desconto 
+  if (couponCode === "desconto10") {
+    const discount = result * 0.1;
+    console.log(`🎁Total: ${(result - discount).toFixed(2)} (com desconto de 10%)`);
+  } else if (couponCode === "desconto20") {
+    const discount = result * 0.2;
+    console.log(`🎁Total: ${(result - discount).toFixed(2)} (com desconto de 20%)`);
+  } else if (couponCode === "desconto50") {
+    const discount = result * 0.5;
+    console.log(`🎁Total: ${(result - discount).toFixed(2)} (com desconto de 50%)`);
+  } else {
+    console.log(`🎁Total: ${result}`);
+  }
 }
 
 // -> deletar item do carrinho

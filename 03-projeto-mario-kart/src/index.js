@@ -14,8 +14,11 @@ const player2 = {
   PONTOS: 0,
 };
 
-async function rollDice() {
+async function rollDice() {// função de rolar dados
   return Math.floor(Math.random() * 6) + 1;
+  //Math.floor => responsável por arredondar valores
+  //Math.random => chama um número aleatório de 0 a 1
+  //Como foi necessitamos de 6 números (1,6), foi necessário multiplicar a função por 6
 }
 
 async function getRandomBlock() {
@@ -44,7 +47,7 @@ async function logRollResult(characterName, block, diceResult, attribute) {
   );
 }
 
-async function playRaceEngine(character1, character2) {
+async function playRaceEngine(character1, character2) { //motor principal
   for (let round = 1; round <= 5; round++) {
     console.log(`🏁 Rodada ${round}`);
 
@@ -119,17 +122,45 @@ async function playRaceEngine(character1, character2) {
       );
 
       if (powerResult1 > powerResult2 && character2.PONTOS > 0) {
+        //Optei por criar uma const bomba para não ter que criar outra const para o casco.
+        //Logo, tratei o casco como uma excessão para o caso da bomba não ser sorteada.
+
+        //Sortear se o Item é um bomba (bomb) ou casco (tratado como excessão da bomba). 
+        const bomb = Math.random();
+        //calcular pontos perdidos(lostPoints) em cada item
+        const lostPoints = bomb ? 2 : 1
+        //Condição do item usado(usedItem)
+        const usedItem = bomb ? "usando bomba 💣" : "usando casco 🐢";
+
         console.log(
-          `${character1.NOME} venceu o confronto! ${character2.NOME} perdeu 1 ponto 🐢`
+          `${character1.NOME} venceu o confronto usando ${usedItem} ! ${character2.NOME} perdeu ${lostPoints} ponto`
         );
-        character2.PONTOS--;
+
+        //O perdedor dessa condição (character2) perderá um ponto
+        character2.PONTOS =- lostPoints;
+
+        //Adicionado 1 ponto Turbo ao vencedor dessa condição (character1)
+        character1.PONTOS++;
       }
 
       if (powerResult2 > powerResult1 && character1.PONTOS > 0) {
+        //Sortear se o Item é um bomba (bomb) ou casco (tratado como excessão da bomba). 
+        const bomb = Math.random() < 0.5;
+        //calcular pontos perdidos(lostPoints) em cada item
+        const lostPoints = bomb ? 2 : 1;
+        //Condição do item usado(usedItem)
+        const usedItem = bomb ? "usando bomba 💣" : "usando casco 🐢";
+
         console.log(
-          `${character2.NOME} venceu o confronto! ${character1.NOME} perdeu 1 ponto 🐢`
+          `${character2.NOME} venceu o confronto usando ${usedItem}! ${character1.NOME} perdeu ${lostPoints} ponto `
         );
-        character1.PONTOS--;
+
+        //O perdedor dessa condição (character1) perderá um ponto
+        character1.PONTOS =- lostPoints;
+
+        //Adicionado 1 ponto Turbo ao vencedor dessa condição (character2)
+        character2.PONTOS++;
+        
       }
 
       console.log(
@@ -164,7 +195,7 @@ async function declareWinner(character1, character2) {
   else console.log("A corrida terminou em empate");
 }
 
-(async function main() {
+(async function main() {// função principal(função de entrada), responsável por chamar as outras funções
   console.log(
     `🏁🚨 Corrida entre ${player1.NOME} e ${player2.NOME} começando...\n`
   );

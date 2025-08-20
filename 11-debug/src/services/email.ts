@@ -11,4 +11,4 @@ async function getHeaderText(): Promise<string> {
   return "EMAIL PARA VOCÊ";
 }
 
-export { getBaseEmail };
+export { getBaseEmail }
